@@ -1,0 +1,3 @@
+﻿  源.cpp
+C:\Users\黄杨东\Desktop\c++\mian ji jian ce\mian ji jian ce\源.cpp(56,14): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
+  mian ji jian ce.vcxproj -> C:\Users\黄杨东\Desktop\c++\mian ji jian ce\x64\Debug\mian ji jian ce.exe
