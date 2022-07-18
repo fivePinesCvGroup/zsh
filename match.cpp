@@ -5,7 +5,7 @@
 #include <math.h>
 using namespace std;
 using namespace cv;
-Mat r,ra;
+Mat r, ra;
 double PI = 3.1415926535, rate2, panduan;
 double sl(Point2f &a, Point2f &b);
 double pd(Point2f &a, Point2f &b);
@@ -75,10 +75,10 @@ int main()
 
                 // cout<<area<<endl;
 
-                //rectangle(a, boundRect[i].tl(), boundRect[i].br(), Scalar(0, 255, 0), 5);
-                
+                // rectangle(a, boundRect[i].tl(), boundRect[i].br(), Scalar(0, 255, 0), 5);
+
                 r = a(Rect(boundRect[i].x, boundRect[i].y, boundRect[i].width, boundRect[i].height));
-                //ra = b(Rect(boundRect[i].x, boundRect[i].y, boundRect[i].width, boundRect[i].height));
+                // ra = b(Rect(boundRect[i].x, boundRect[i].y, boundRect[i].width, boundRect[i].height));
 
                 double port;
                 if (boundRect[i].height != 0 && boundRect[i].width != 0)
@@ -107,23 +107,23 @@ int main()
             right[j].rect = minAreaRect(contours2[j]);
             Point2f px[4];
             right[j].rect.points(px);
-             for (int j = 0; j < 4; j++)
-                    {
-                        line(r, px[j], px[(j + 1) % 4], Scalar(0, 0, 255), 1);
-                    }
+            for (int j = 0; j < 4; j++)
+            {
+                line(r, px[j], px[(j + 1) % 4], Scalar(0, 0, 255), 1);
+            }
             right[j].area = contourArea(contours2[j]);
 
-            if (right[j].area > 3000&&right[j].area<80000)
+            if (right[j].area > 3000 && right[j].area < 80000)
             {
 
                 right[j].rate = rate(right[j].height, right[j].width);
-                //cout << right[j].rate << endl;
+                // cout << right[j].rate << endl;
                 if (right[j].rate > 1.2)
                 {
-                   
+
                     right[j].rect.points(px);
                     Point2f p1 = (px[0] + px[3]) / 2, p2 = (px[2] + px[1]) / 2;
-                    
+
                     double temp1 = pd(px[0], px[1]), temp2 = pd(px[0], px[3]);
                     if (temp1 > temp2)
                     {
@@ -133,13 +133,25 @@ int main()
                     }
                     else if (temp2 > temp1)
                     {
- 
+
                         right[j].slope = sl(px[0], px[3]);
                         // right[j].height=temp2,right[j].width=temp1;
                     }
 
-                    putText(r, to_string(right[j].rateg), px[1], 1, 2, Scalar(0, 255, 0), 2, 8);
+                    putText(r, to_string(right[j].rate), px[1], 1, 2, Scalar(0, 255, 0), 2, 8);
                     cout << right[j].slope << endl;
+                    if (fabs(right[j].slope > 60))
+                    {
+                        cout << "go stright on" << endl;
+                    }
+                    else if (right[j].slope > 0)
+                    {
+                        cout << "left" << endl;
+                    }
+                    else if (right[j].slope < 0)
+                    {
+                        cout << "right" << endl;
+                    }
                 }
             }
         }
